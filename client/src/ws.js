@@ -2,5 +2,5 @@ import {io} from "socket.io-client"
 
 
 export const connectWS = () => {
-    return io('http://localhost:3000')
+    return io('https://chat-with-socket-thu8.vercel.app')
 }
