@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { connectWS } from './ws';
 import { useNavigate } from 'react-router-dom';
+import socket from './assets/socket.jpeg'
 
 export default function App() {
   const timer = useRef(null);
@@ -51,11 +52,8 @@ export default function App() {
     });
 
     return () => {
-      // to prevent memory leak
-      socket.current.off('roomNotice');
-      socket.current.off('chatMessage');
-      socket.current.off('typing');
-      socket.current.off('stopTyping');
+      console.log("disconnected");
+        socket.disconnect();
     };
   }, []);
 
@@ -156,12 +154,12 @@ export default function App() {
         <div className="w-full max-w-2xl h-[90vh] bg-white rounded-xl shadow-md flex flex-col overflow-hidden">
           {/* CHAT HEADER */}
           <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200">
-            <div className="h-10 w-10 rounded-full bg-[#075E54] flex items-center justify-center text-white font-semibold">
-              R
+            <div >
+              <img src="https://s.yimg.com/zb/imgv1/598d51dd-9b00-3d38-b592-f412208f1c6e/t_500x300" width={30} height={30} alt="socket" />
             </div>
             <div className="flex-1">
-              <div className="text-sm font-medium text-[#303030]">
-                Realtime group chat
+              <div className="text-lg font-semibold text-[#303030]">
+                ChatWithSocket
               </div>
 
               {typers.length ? (
@@ -242,11 +240,11 @@ export default function App() {
                 onChange={(e) => setText(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type a message..."
-                className="w-full resize-none px-4 py-4 text-sm outline-none"
+                className="w-full resize-none rounded-full px-4 py-4 text-sm outline-none"
               />
               <button
                 onClick={sendMessage}
-                className="bg-green-500 text-white px-4 py-2 mr-2 rounded-full text-sm font-medium cursor-pointer">
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 mr-2 rounded-full text-sm font-medium cursor-pointer">
                 Send
               </button>
             </div>

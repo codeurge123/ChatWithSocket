@@ -7,7 +7,9 @@ const server = createServer(app);
 
 const io = new Server(server,{
     cors: {
-        origin: 'https://chat-with-socket.vercel.app',
+        origin: 'http://localhost:5173',
+        methods: ['GET','POST'],
+        credentials: true
     }
 });
 
@@ -39,6 +41,10 @@ io.on('connection',(socket) => {
     })
     socket.on('stopTyping',(userName) => {
         socket.broadcast.emit('stopTyping',userName);
+    })
+
+    socket.on('disconnect', () => {
+        console.log(`User Disconnected ${socket.id}`);
     })
 
 })
